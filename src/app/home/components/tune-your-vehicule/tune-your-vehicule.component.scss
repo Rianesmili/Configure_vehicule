@@ -1,0 +1,22 @@
+#container_type ion-item,
+#container_extras ion-item,
+#container_tires ion-item  {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+#container_type ion-label,
+#container_tires ion-label,
+#container_extras ion-label {
+    margin: 10px;
+    flex: 1;
+}
+
+.credits{
+    text-align: right;
+}
+
+.ion-button{
+    margin: 50px;
+}
