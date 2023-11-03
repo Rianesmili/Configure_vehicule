@@ -26,7 +26,7 @@
 
 <ion-label>Tires</ion-label>
 
-<div id="container_tires">
+<div id="container_tires" [hidden]="selectedItem === 'Nitro' || disableTires">
   <ion-radio-group value="tires">
     <ion-item>
       <ion-radio value="Hard"></ion-radio>
@@ -56,7 +56,12 @@
   </ion-item>
 </div>
 
-<ion-button shape="Round" expand="block">Purchase</ion-button>
+<ion-item id="container_totale">
+  <ion-label [ngClass]="{'total-red': isTotalExceededAvailableCredits(total, credits)}">Total: {{ total }} crédits</ion-label>
+  <ion-label class="credit_disponible">credits available</ion-label>
+</ion-item>
+
+<ion-button [disabled]="isTotalExceededAvailableCredits(total, credits)" shape="round" expand="block">Purchase</ion-button>
 
 </ion-content>
 

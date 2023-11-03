@@ -20,3 +20,21 @@
 .ion-button{
     margin: 50px;
 }
+
+#container_totale {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Total,
+  X,
+  .credit_disponible {
+    text-align: left;
+    flex: 1;
+  }
+
+  .total-red {
+    color: red;
+  }
+  
+  
