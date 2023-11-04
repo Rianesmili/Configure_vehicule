@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDataService } from '../../../user-data.service';
+import { UserDataService } from '../../repository/user-data.service';
+
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tune-your-vehicule',
@@ -8,12 +10,18 @@ import { UserDataService } from '../../../user-data.service';
 })
 export class TuneYourVehiculeComponent implements OnInit {
 
-  total: number = 0; // Initialisez total à 0
+  total: number = 0;
   selectedItem: string = "";
   disableTires: boolean = false;
 
-  constructor(private userDataService: UserDataService) {}
+  constructor(
+    private userDataService: UserDataService,
+    private router: Router
+  ) {}
 
+  navigateToPurchase() {
+    this.router.navigate(['purchase']);
+  }
   get credits(): number {
     return this.userDataService.getCredits();
   }
@@ -24,7 +32,7 @@ export class TuneYourVehiculeComponent implements OnInit {
 
   isTotalExceededAvailableCredits(total: number, availableCredits: number): boolean {
     return total > availableCredits;
-  }  
+  }
 
   onCheckboxChange(event: CustomEvent) {
     const isChecked = event.detail.checked;

@@ -67,8 +67,7 @@
     <ion-label class="credit_disponible">credits available</ion-label>
   </ion-item>
 
-  <ion-button [disabled]="isTotalExceededAvailableCredits(total, credits)" shape="round" expand="block">Purchase
-  </ion-button>
+  <ion-button (click)="navigateToPurchase()" [disabled]="isTotalExceededAvailableCredits(total, credits)" shape="round" expand="block">Purchase</ion-button>
 
 </ion-content>
 

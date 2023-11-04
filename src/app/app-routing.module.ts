@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+import { PurchaseComponent } from './home/components/purchase/purchase.component';
+
+
 const routes: Routes = [
   {
     path: 'home',
@@ -11,6 +14,12 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+
+  {
+    path: 'purchase',
+    component: PurchaseComponent
+  },
+
 ];
 
 @NgModule({
