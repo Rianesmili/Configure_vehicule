@@ -10,7 +10,7 @@ import { Clipboard } from '@capacitor/clipboard';
 })
 export class PurchaseComponent implements OnInit {
 
-  constructor(private clipboard: Clipboard) {
+  constructor() {
   }
 
   total: number = 130;
