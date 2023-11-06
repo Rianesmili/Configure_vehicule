@@ -1,6 +1,7 @@
 export interface VehicleConfiguration {
   type: string;
   tires: string;
-  extras: string[];
+  nitro: boolean;
+  spoiler: boolean;
   creditsRequired: number;
 }
