@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../../repository/user-data.service';
 
 import { Router } from '@angular/router';
+import {VehicleConfiguration} from "../../data/vehicle-configuration";
 
 @Component({
   selector: 'app-tune-your-vehicule',
@@ -10,9 +11,17 @@ import { Router } from '@angular/router';
 })
 export class TuneYourVehiculeComponent implements OnInit {
 
-  total: number = 0;
+  total: number = 215;
   selectedItem: string = "";
   disableTires: boolean = false;
+
+  configuration: VehicleConfiguration = {
+    type: '',
+    tires: '',
+    nitro: false,
+    spoiler: false,
+    creditsRequired: 0
+  };
 
   constructor(
     private userDataService: UserDataService,
@@ -34,10 +43,33 @@ export class TuneYourVehiculeComponent implements OnInit {
     return total > availableCredits;
   }
 
-  onCheckboxChange(event: CustomEvent) {
-    const isChecked = event.detail.checked;
-    this.disableTires = isChecked && this.selectedItem === 'Nitro';
+  updateCreditsRequired() {
+    let creditsRequired = 0;
+
+    if (this.configuration.type === 'Car') {
+      creditsRequired += 0;
+    } else if (this.configuration.type === 'Motorbike') {
+      creditsRequired += 0;
+    } else if (this.configuration.type === 'Hovercraft') {
+      creditsRequired += 50;
+    }
+
+    if (this.configuration.tires === 'Hard') {
+      creditsRequired += 0;
+    } else if (this.configuration.tires === 'Soft') {
+      creditsRequired += 30;
+    }
+
+    if (this.configuration.nitro) {
+      creditsRequired += 100;
+    }
+    if (this.configuration.spoiler) {
+      creditsRequired += 200;
+    }
+
+    this.configuration.creditsRequired = creditsRequired;
   }
+
 
   ngOnInit() {}
 

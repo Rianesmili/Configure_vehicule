@@ -9,10 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { PurchaseComponent } from './home/components/purchase/purchase.component';
 import { TuneYourVehiculeComponent } from './home/components/tune-your-vehicule/tune-your-vehicule.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, TuneYourVehiculeComponent, PurchaseComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
