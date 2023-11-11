@@ -36,6 +36,9 @@ export class TuneYourVehiculeComponent implements OnInit {
       creditsLeft: this.credits - this.configuration.creditsRequired
     };
 
+    // TODO : fix to non reinitialisation of credits in first view this.userDataService.setPurchasedItems(this.configuration.purchasedItems);
+
+    this.userDataService.setCredits(this.credits - this.configuration.creditsRequired);
     this.userDataService.setPurchasedItems(this.configuration.purchasedItems);
 
     this.router.navigate(['purchase'], { state: purchaseSummary });
