@@ -4,4 +4,5 @@ export interface VehicleConfiguration {
   nitro: boolean;
   spoiler: boolean;
   creditsRequired: number;
+  purchasedItems: string;
 }

@@ -19,7 +19,8 @@ export class TuneYourVehiculeComponent implements OnInit {
     tires: '',
     nitro: false,
     spoiler: false,
-    creditsRequired: 0
+    creditsRequired: 0,
+    purchasedItems: '',
   };
 
   constructor(
@@ -28,10 +29,9 @@ export class TuneYourVehiculeComponent implements OnInit {
   ) {}
 
   navigateToPurchase() {
-    // const purchasedItems = /* Logique pour obtenir les articles achetés */;
     const purchaseSummary = {
       total: this.configuration.creditsRequired,
-      // purchasedItems: purchasedItems,
+      purchasedItems: this.configuration.purchasedItems,
       creditsLeft: this.credits - this.configuration.creditsRequired
     };
 
@@ -52,34 +52,42 @@ export class TuneYourVehiculeComponent implements OnInit {
 
   updateCreditsRequired() {
     let creditsRequired = 0;
+    let purchasedItems = 'Purchased: ';
 
     if (this.configuration.type === 'Car') {
       creditsRequired += 0;
+      purchasedItems += 'Car, ';
     } else if (this.configuration.type === 'Motorbike') {
       creditsRequired += 0;
+      purchasedItems += 'Motorbike, ';
     } else if (this.configuration.type === 'Hovercraft') {
       creditsRequired += 50;
+      purchasedItems += 'Hovercraft, ';
     }
 
     if (this.configuration.tires === 'Hard') {
       creditsRequired += 0;
+      purchasedItems += 'Hard tires, ';
     } else if (this.configuration.tires === 'Soft') {
       creditsRequired += 30;
+      purchasedItems += 'Soft tires, ';
     }
 
     if (this.configuration.nitro) {
       creditsRequired += 100;
-      this.disableTires = true; // Désactive la sélection de pneus lorsque Nitro est sélectionné
-      this.configuration.tires = '';
-    } else {
-      this.disableTires = false; // Réactive la sélection de pneus lorsque Nitro n'est pas sélectionné
+      purchasedItems += 'Nitro (10 units), ';
     }
+
     if (this.configuration.spoiler) {
       creditsRequired += 200;
+      purchasedItems += 'Spoiler, ';
     }
 
     this.configuration.creditsRequired = creditsRequired;
+    this.configuration.purchasedItems = purchasedItems.slice(0, -2);
+    // Supprime la virgule et l'espace du dernier élément
   }
+
 
 
   ngOnInit() {}
