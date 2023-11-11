@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../../repository/user-data.service';
-
 import { Router } from '@angular/router';
 import {VehicleConfiguration} from "../../data/vehicle-configuration";
 
@@ -70,6 +69,10 @@ export class TuneYourVehiculeComponent implements OnInit {
 
     if (this.configuration.nitro) {
       creditsRequired += 100;
+      this.disableTires = true; // Désactive la sélection de pneus lorsque Nitro est sélectionné
+      this.configuration.tires = '';
+    } else {
+      this.disableTires = false; // Réactive la sélection de pneus lorsque Nitro n'est pas sélectionné
     }
     if (this.configuration.spoiler) {
       creditsRequired += 200;
