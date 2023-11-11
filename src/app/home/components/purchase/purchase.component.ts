@@ -33,8 +33,10 @@ export class PurchaseComponent implements OnInit {
   }
 
   copyPurchaseSummary() {
-    const purchaseSummaryText = this.purchaseSummary.nativeElement.innerText;
-    this.copyToClipboard(purchaseSummaryText);
+    if (this.purchaseSummary) {
+      const purchaseSummaryText = this.purchaseSummary.nativeElement.innerText;
+      this.copyToClipboard(purchaseSummaryText);
+    }
   }
 
   ngOnInit() {
