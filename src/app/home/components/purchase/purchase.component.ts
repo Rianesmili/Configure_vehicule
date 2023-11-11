@@ -11,9 +11,10 @@ export class PurchaseComponent implements OnInit {
 
   constructor(private userDataService: UserDataService) {}
 
-  total: number = 130;
-  creditsLeft: number = 85;
+  total: number = 0;
+  creditsLeft: number = 0;
   purchasedItems: string = "";
+
 
   @ViewChild('purchaseSummary', { static: false }) purchaseSummary!: ElementRef;
 
@@ -35,11 +36,9 @@ export class PurchaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.total = this.userDataService.getTotal();
     this.creditsLeft = this.userDataService.getCredits();
-    const state = window.history.state;
-    if (state && state.purchasedItems) {
-      this.purchasedItems = state.purchasedItems;
-    }
+    this.purchasedItems = this.userDataService.getPurchasedItems();
   }
 
 }

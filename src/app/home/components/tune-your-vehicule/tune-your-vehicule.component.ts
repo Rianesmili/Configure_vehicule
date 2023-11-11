@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDataService } from '../../repository/user-data.service';
 import { Router } from '@angular/router';
-import {VehicleConfiguration} from "../../data/vehicle-configuration";
+import { VehicleConfiguration } from "../../data/vehicle-configuration";
 
 @Component({
   selector: 'app-tune-your-vehicule',
@@ -10,7 +10,8 @@ import {VehicleConfiguration} from "../../data/vehicle-configuration";
 })
 export class TuneYourVehiculeComponent implements OnInit {
 
-  total: number = 215;
+  total: number = 0;
+  creditsLeft: number = 250;
   selectedItem: string = "";
   disableTires: boolean = false;
 
@@ -34,6 +35,8 @@ export class TuneYourVehiculeComponent implements OnInit {
       purchasedItems: this.configuration.purchasedItems,
       creditsLeft: this.credits - this.configuration.creditsRequired
     };
+
+    this.userDataService.setPurchasedItems(this.configuration.purchasedItems);
 
     this.router.navigate(['purchase'], { state: purchaseSummary });
   }
@@ -75,7 +78,11 @@ export class TuneYourVehiculeComponent implements OnInit {
 
     if (this.configuration.nitro) {
       creditsRequired += 100;
+      this.disableTires = true; // Désactive la sélection de pneus lorsque Nitro est sélectionné
+      this.configuration.tires = '';
       purchasedItems += 'Nitro (10 units), ';
+    } else {
+      this.disableTires = false; // Réactive la sélection de pneus lorsque Nitro n'est pas sélectionné
     }
 
     if (this.configuration.spoiler) {
@@ -86,10 +93,13 @@ export class TuneYourVehiculeComponent implements OnInit {
     this.configuration.creditsRequired = creditsRequired;
     this.configuration.purchasedItems = purchasedItems.slice(0, -2);
     // Supprime la virgule et l'espace du dernier élément
+    this.userDataService.setTotal(creditsRequired);
   }
 
-
-
-  ngOnInit() {}
+  ngOnInit() {
+    // Initialisez les valeurs avec celles du service UserDataService
+    this.total = this.userDataService.getTotal();
+    this.creditsLeft = this.userDataService.getCredits();
+  }
 
 }

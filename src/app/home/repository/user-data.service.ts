@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class UserDataService {
   private credits: number = 215;
+  private purchasedItems: string = "";
+  private total: number = 0;
+
 
   constructor() {}
 
@@ -15,4 +18,23 @@ export class UserDataService {
   setCredits(newCredits: number) {
     this.credits = newCredits;
   }
+
+  getPurchasedItems(): string {
+    return this.purchasedItems;
+  }
+
+  setPurchasedItems(items: string) {
+    this.purchasedItems = items;
+  }
+
+
+  setTotal(newTotal: number) {
+    this.total = newTotal;
+  }
+
+  getTotal(): number {
+    return this.total;
+  }
+
+
 }
