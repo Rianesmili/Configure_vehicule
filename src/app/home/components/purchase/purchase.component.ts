@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
-import { Clipboard } from '@capacitor/clipboard';
+import {Clipboard} from '@capacitor/clipboard';
+import {UserDataService} from "../../repository/user-data.service";
 
 
 @Component({
@@ -10,12 +11,13 @@ import { Clipboard } from '@capacitor/clipboard';
 })
 export class PurchaseComponent implements OnInit {
 
-  constructor() {
+  constructor(private userDataService: UserDataService) {
+
   }
 
   total: number = 130;
-  purchasedItems: string = "Car, Soft tires, Nitro (10 units)";
   creditsLeft: number = 85;
+  purchasedItems: string = "XXXX"
 
 
   @ViewChild('purchaseSummary', {static: false}) purchaseSummary!: ElementRef;
@@ -36,6 +38,7 @@ export class PurchaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.creditsLeft = this.userDataService.getCredits();
   }
 
 }

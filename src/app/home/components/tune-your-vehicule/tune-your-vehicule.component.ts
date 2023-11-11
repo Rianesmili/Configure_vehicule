@@ -29,8 +29,16 @@ export class TuneYourVehiculeComponent implements OnInit {
   ) {}
 
   navigateToPurchase() {
-    this.router.navigate(['purchase']);
+    // const purchasedItems = /* Logique pour obtenir les articles achetés */;
+    const purchaseSummary = {
+      total: this.configuration.creditsRequired,
+      // purchasedItems: purchasedItems,
+      creditsLeft: this.credits - this.configuration.creditsRequired
+    };
+
+    this.router.navigate(['purchase'], { state: purchaseSummary });
   }
+
   get credits(): number {
     return this.userDataService.getCredits();
   }
