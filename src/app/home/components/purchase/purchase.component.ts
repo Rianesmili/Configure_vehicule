@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Clipboard } from '@capacitor/clipboard';
-import { UserDataService } from "../../repository/user-data.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Clipboard} from '@capacitor/clipboard';
+import {UserDataService} from "../../repository/user-data.service";
 
 @Component({
   selector: 'app-purchase',
@@ -9,14 +9,15 @@ import { UserDataService } from "../../repository/user-data.service";
 })
 export class PurchaseComponent implements OnInit {
 
-  constructor(private userDataService: UserDataService) {}
+  constructor(private userDataService: UserDataService) {
+  }
 
   total: number = 0;
   creditsLeft: number = 0;
   purchasedItems: string = "";
 
 
-  @ViewChild('purchaseSummary', { static: false }) purchaseSummary!: ElementRef;
+  @ViewChild('purchaseSummary', {static: false}) purchaseSummary!: ElementRef;
 
   copyToClipboard(text: string) {
     Clipboard.write({

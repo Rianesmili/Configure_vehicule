@@ -11,9 +11,10 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-label #purchaseSummary>Total amount: {{ total }} credits - Purchased: {{ purchasedItems }} - Credits left: {{ creditsLeft }}</ion-label>
+  <ion-label #purchaseSummary>Total amount: {{ total }} credits - Purchased: {{ purchasedItems }} - Credits
+    left: {{ creditsLeft }}</ion-label>
 
-  <ion-button expand="block" shape="round" (click)="copyPurchaseSummary()">Copy to clipboard</ion-button>
+  <ion-button (click)="copyPurchaseSummary()" expand="block" shape="round">Copy to clipboard</ion-button>
   <ion-img alt='Helmet Image' src='assets/helmet.png'/>
 
 </ion-content>

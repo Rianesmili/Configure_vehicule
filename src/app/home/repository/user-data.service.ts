@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,8 @@ export class UserDataService {
   private total: number = 0;
 
 
-  constructor() {}
+  constructor() {
+  }
 
   getCredits(): number {
     return this.credits;
