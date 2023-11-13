@@ -14,7 +14,10 @@
   <ion-label #purchaseSummary>Total amount: {{ total }} credits - Purchased: {{ purchasedItems }} - Credits
     left: {{ creditsLeft }}</ion-label>
 
-  <ion-button (click)="copyPurchaseSummary()" expand="block" shape="round">Copy to clipboard</ion-button>
+  <ion-button (cbOnError)="onCopyError()" (cbOnSuccess)="onCopySuccess()" [cbContent]="getClipboardText()"
+              expand="block" ngxClipboard shape="round">
+    Copy to clipboard
+  </ion-button>
   <ion-img alt='Helmet Image' src='assets/helmet.png'/>
 
 </ion-content>
