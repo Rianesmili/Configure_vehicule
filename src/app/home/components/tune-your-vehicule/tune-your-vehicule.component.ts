@@ -59,7 +59,7 @@ export class TuneYourVehiculeComponent implements OnInit {
 
   updateCreditsRequired() {
     let creditsRequired = 0;
-    let purchasedItems = 'Purchased: ';
+    let purchasedItems = '';
 
     if (this.configuration.type === 'Car') {
       creditsRequired += 0;
