@@ -3,7 +3,8 @@
 #container_tires ion-item {
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 #container_type ion-label,
@@ -29,11 +30,18 @@
 .Total,
 X,
 .credit_disponible {
+  margin-top: 10px;
   text-align: left;
-  flex: 1;
+}
+
+ion-label {
+  display: block;
+  margin-top: 10px;
 }
 
 .total-red {
   color: red;
 }
+
+
 

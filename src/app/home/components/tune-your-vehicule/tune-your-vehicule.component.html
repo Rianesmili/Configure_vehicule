@@ -64,10 +64,10 @@
 
 
   <ion-item id="container_totale">
-    <ion-label [ngClass]="{'total-red': isTotalExceededAvailableCredits(configuration.creditsRequired, credits)}">
+    <ion-label>
       Total: {{ configuration.creditsRequired }} crédits
     </ion-label>
-    <ion-label class="credit_disponible">credits available: {{ credits }}</ion-label>
+    <ion-label [ngClass]="{'total-red': isTotalExceededAvailableCredits(configuration.creditsRequired, credits)}" class="credit_disponible">credits available: {{ credits }}</ion-label>
   </ion-item>
 
   <ion-button (click)="navigateToPurchase()"
