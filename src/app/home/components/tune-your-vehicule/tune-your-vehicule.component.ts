@@ -10,12 +10,17 @@ import {VehicleConfiguration} from "../../data/vehicle-configuration";
 })
 export class TuneYourVehiculeComponent implements OnInit {
 
-  total: number = 0;
-  creditsLeft: number = 250;
-  selectedItem: string = "";
-  disableTires: boolean = false;
+  total: number = 0; // total des crédits requis pour la configuration actuelle
+  creditsLeft: number = 250; // Stocke le nombre de crédits disponibles initialement a 250
+  disableTires: boolean = false; // Désactive le bouton des pneus
+  selectedVehicleType: string = ''; //  Stocke le type de véhicule sélectionné
+  selectedTires: string = ''; // Stocke le type de pneus sélectionné
+
+  isNitroSelected: boolean = false;
+  isSpoilerSelected: boolean = false;
 
   configuration: VehicleConfiguration = {
+    // configuration: Objet contenant les informations de configuration du véhicule
     type: '',
     tires: '',
     nitro: false,
@@ -37,75 +42,92 @@ export class TuneYourVehiculeComponent implements OnInit {
       creditsLeft: this.credits - this.configuration.creditsRequired
     };
 
-    // TODO : fix to non reinitialisation of credits in first view this.userDataService.setPurchasedItems(this.configuration.purchasedItems);
-
     this.userDataService.setCredits(this.credits - this.configuration.creditsRequired);
     this.userDataService.setPurchasedItems(this.configuration.purchasedItems);
 
-    this.router.navigate(['purchase'], {state: purchaseSummary});
+   this.router.navigate(['purchase'], {state: purchaseSummary});
   }
 
   get credits(): number {
+    /**
+     * Cette fonction récupère la valeur actuelle des crédits de l'utilisateur à partir du service UserDataService.
+     */
     return this.userDataService.getCredits();
   }
 
   set credits(newCredits: number) {
+    /**
+     * Cette fonction met à jour la valeur des crédits de l'utilisateur dans le service UserDataService.
+     */
     this.userDataService.setCredits(newCredits);
   }
 
-  isTotalExceededAvailableCredits(total: number, availableCredits: number): boolean {
-    return total > availableCredits;
+  isTotalExceededAvailableCredits(): boolean {
+    /**
+     * Cette fonction vérifie si le total des crédits requis pour la configuration actuelle est supérieur aux crédits disponibles.
+     * Si c'est le cas, elle retourne true.
+     * et elle vérifie si les valeurs des propriétés selectedVehicleType, selectedTires, isNitroSelected et isSpoilerSelected
+     *  sont toutes égales à '' ou false. Si c'est le cas, cela signifie qu'aucun champ n'est sélectionné et la fonction retourne true
+     */
+    return (
+      this.configuration.creditsRequired > this.credits ||
+      (this.selectedVehicleType === '' && this.selectedTires === '' && !this.isNitroSelected && !this.isSpoilerSelected)
+    );
   }
 
-  updateCreditsRequired() {
+  updateConfiguration() {
+    /**
+     * Cette fonction met à jour la configuration du véhicule en fonction des valeurs des propriétés
+     * selectedVehicleType, selectedTires, isNitroSelected et isSpoilerSelected.
+     */
     let creditsRequired = 0;
     let purchasedItems = '';
 
-    if (this.configuration.type === 'Car') {
-      creditsRequired += 0;
-      purchasedItems += 'Car, ';
-      this.disableTires = false;
-    } else if (this.configuration.type === 'Motorbike') {
-      creditsRequired += 0;
-      purchasedItems += 'Motorbike, ';
-      this.disableTires = false;
-    } else if (this.configuration.type === 'Hovercraft') {
+    creditsRequired += 0;
+    purchasedItems += this.selectedVehicleType + ', ';
+
+    if (this.selectedVehicleType === 'Hovercraft') {
       creditsRequired += 50;
-      purchasedItems += 'Hovercraft, ';
-      this.disableTires = true; // Désactive la sélection de pneus lorsque le type est "Hovercraft"
-      this.configuration.tires = ''; // Réinitialise la sélection de pneus
-    } else {
-      this.disableTires = false; // Réactive la sélection de pneus pour les autres types de véhicules
-    }
-
-    if (this.configuration.tires === 'Hard') {
-      creditsRequired += 0;
       purchasedItems += 'Hard tires, ';
-    } else if (this.configuration.tires === 'Soft') {
-      creditsRequired += 30;
-      purchasedItems += 'Soft tires, ';
+      this.configuration.tires = 'Hard';
+    } else {
+      if (this.selectedTires === 'Hard') {
+        creditsRequired += 0;
+        purchasedItems += 'Hard tires, ';
+      } else if (this.selectedTires === 'Soft') {
+        creditsRequired += 30;
+        purchasedItems += 'Soft tires, ';
+      }
+      this.configuration.tires = this.selectedTires;
     }
 
-    if (this.configuration.nitro) {
+    if (this.isNitroSelected) {
       creditsRequired += 100;
       purchasedItems += 'Nitro (10 units), ';
+      this.configuration.nitro = true;
+    } else {
+      this.configuration.nitro = false;
     }
 
-    if (this.configuration.spoiler) {
+    if (this.isSpoilerSelected) {
       creditsRequired += 200;
       purchasedItems += 'Spoiler, ';
+      this.configuration.spoiler = true;
+    } else {
+      this.configuration.spoiler = false;
     }
 
     this.configuration.creditsRequired = creditsRequired;
-    this.configuration.purchasedItems = purchasedItems.slice(0, -2);
-    // Supprime la virgule et l'espace du dernier élément
+    this.configuration.purchasedItems = purchasedItems.slice(0, -2); // Supprime la dernière virgule et l'espace
     this.userDataService.setTotal(creditsRequired);
   }
 
   ngOnInit() {
-    // Initialisez les valeurs avec celles du service UserDataService
+    /**
+     * Cette fonction est appelée lors de l'initialisation du composant.
+     * Elle récupère les valeurs initiales du total et des crédits disponibles à partir du service.
+     */
     this.total = this.userDataService.getTotal();
     this.creditsLeft = this.userDataService.getCredits();
   }
-
 }

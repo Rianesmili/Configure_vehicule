@@ -10,7 +10,7 @@
   <ion-label>Type</ion-label>
 
   <div id="container_type">
-    <ion-radio-group (ionChange)="updateCreditsRequired()" [(ngModel)]="configuration.type">
+    <ion-radio-group (ionChange)="updateConfiguration()" [(ngModel)]="selectedVehicleType">
       <ion-item>
         <ion-radio value="Car"></ion-radio>
         <ion-label>Car</ion-label>
@@ -32,14 +32,14 @@
   <ion-label>Tires</ion-label>
 
   <div id="container_tires">
-    <ion-radio-group (ionChange)="updateCreditsRequired()" [(ngModel)]="configuration.tires">
+    <ion-radio-group (ionChange)="updateConfiguration()" [(ngModel)]="selectedTires">
       <ion-item>
-        <ion-radio [disabled]="disableTires" value="Hard"></ion-radio>
+        <ion-radio [disabled]="selectedVehicleType === 'Hovercraft'" value="Hard"></ion-radio>
         <ion-label>Hard tires</ion-label>
         <ion-label class="credits">0 crédit</ion-label>
       </ion-item>
       <ion-item>
-        <ion-radio [disabled]="disableTires" value="Soft"></ion-radio>
+        <ion-radio [disabled]="selectedVehicleType === 'Hovercraft'" value="Soft"></ion-radio>
         <ion-label>Soft tires</ion-label>
         <ion-label class="credits">30 crédit</ion-label>
       </ion-item>
@@ -50,13 +50,13 @@
   <ion-label>Extras</ion-label>
 
   <ion-item>
-    <ion-checkbox (ionChange)="updateCreditsRequired()" [(ngModel)]="configuration.nitro"
+    <ion-checkbox (ionChange)="updateConfiguration()" [(ngModel)]="isNitroSelected"
                   labelPlacement="end"></ion-checkbox>
     <ion-label>Nitro (10 Units)</ion-label>
     <ion-label class="credits">100 crédit</ion-label>
   </ion-item>
   <ion-item>
-    <ion-checkbox (ionChange)="updateCreditsRequired()" [(ngModel)]="configuration.spoiler"
+    <ion-checkbox (ionChange)="updateConfiguration()" [(ngModel)]="isSpoilerSelected"
                   labelPlacement="end"></ion-checkbox>
     <ion-label>Spoiler</ion-label>
     <ion-label class="credits">200 crédit</ion-label>
@@ -67,11 +67,11 @@
     <ion-label>
       Total: {{ configuration.creditsRequired }} crédits
     </ion-label>
-    <ion-label [ngClass]="{'total-red': isTotalExceededAvailableCredits(configuration.creditsRequired, credits)}" class="credit_disponible">credits available: {{ credits }}</ion-label>
+    <ion-label [ngClass]="{'total-red': configuration.creditsRequired > credits}" class="credit_disponible">credits available: {{ credits }}</ion-label>
   </ion-item>
 
   <ion-button (click)="navigateToPurchase()"
-              [disabled]="isTotalExceededAvailableCredits(configuration.creditsRequired, credits)"
+              [disabled]="isTotalExceededAvailableCredits()"
               expand="block" shape="round">
     Purchase
   </ion-button>
