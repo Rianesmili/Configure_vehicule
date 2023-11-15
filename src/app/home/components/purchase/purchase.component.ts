@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDataService} from "../../repository/user-data.service";
-import { ToastController } from '@ionic/angular';  // service ToastController
-import { Platform } from '@ionic/angular';  // service Platform pour gérer la plateforme si android ou web pour presse papier
+import {Platform, ToastController} from '@ionic/angular'; // service Platform pour gérer la plateforme si android ou web pour presse papier // service ToastController
 
 @Component({
   selector: 'app-purchase',
@@ -23,29 +22,29 @@ export class PurchaseComponent implements OnInit {
 
 
   async showToast(message: string) {
+    /** Création d'un toast asynchrone  veut dire que le code ne s'arrête pas pour attendre la fin de l'exécution de la méthode */
     const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
+      message: message, // prend en paramètre le message à afficher
+      duration: 2000, // durée d'affichage du toast
       position: 'bottom',
     });
     await toast.present();
   }
 
-  getClipboardText(): string {
+  getClipboardText(): string { /** construit le texte à copier dans le presse papier */
     return `Total amount: ${this.total} credits - Purchased: ${this.purchasedItems} - Credits left: ${this.creditsLeft}`;
   }
 
-  onCopySuccess() {
+  onCopySuccess() { /** Dans le cas d'une application mobile, on utilise le plugin Clipboard de capacitor */
     if (this.platform.is('cordova') || this.platform.is('capacitor')) {
-      // Si mobile android
-      this.showToast(`${this.getClipboardText()} - Texte copié avec succès`);
+      this.showToast(`Texte copié avec succès`); // Si mobile android
     } else {
-      // Si Navigateur
-      alert(`${this.getClipboardText()} - Texte copié avec succès`);
+      alert(`Texte copié avec succès`); // Si Web
     }
   }
 
   ngOnInit() {
+    /** récupère les données du service UserDataService */
     this.total = this.userDataService.getTotal();
     this.creditsLeft = this.userDataService.getCredits();
     this.purchasedItems = this.userDataService.getPurchasedItems();
